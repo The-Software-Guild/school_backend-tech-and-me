@@ -25,63 +25,49 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     @Transactional
     public Student createNewStudent(Student student) {
-        //YOUR CODE STARTS HERE
-
-         return null;
-
-        //YOUR CODE ENDS HERE
+    	String sql = "INSERT INTO student (fName, lName) VALUES (?, ?)";
+        jdbcTemplate.update(sql, student.getStudentFirstName(), student.getStudentLastName());
+        return student;
     }
 
     @Override
     public List<Student> getAllStudents() {
-        //YOUR CODE STARTS HERE
-
-        return null;
-
-        //YOUR CODE ENDS HERE
+    	String sql = "SELECT * FROM student";
+        return jdbcTemplate.query(sql, new StudentMapper());
     }
 
     @Override
     public Student findStudentById(int id) {
-        //YOUR CODE STARTS HERE
-
-        return null;
-
-        //YOUR CODE ENDS HERE
+    	String sql = "SELECT * FROM student WHERE sid = ?";
+        return jdbcTemplate.queryForObject(sql, new StudentMapper(), id);
     }
 
     @Override
     public void updateStudent(Student student) {
-        //YOUR CODE STARTS HERE
-
-
-        //YOUR CODE ENDS HERE
+    	String sql = "UPDATE student SET fName = ?, lName = ? WHERE sid = ?";
+        jdbcTemplate.update(sql, student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId());
     }
 
     @Override
     public void deleteStudent(int id) {
-        //YOUR CODE STARTS HERE
-
-
-
-        //YOUR CODE ENDS HERE
+    	String sql = "DELETE FROM student WHERE sid = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
     public void addStudentToCourse(int studentId, int courseId) {
-        //YOUR CODE STARTS HERE
+    	String sql = "SELECT COUNT(*) FROM course_student WHERE student_id = ? AND course_id = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, studentId, courseId);
 
-
-
-        //YOUR CODE ENDS HERE
+        if (count == 0) {
+            String insertSql = "INSERT INTO course_student (student_id, course_id) VALUES (?, ?)";
+            jdbcTemplate.update(insertSql, studentId, courseId);
+        }
     }
 
     @Override
     public void deleteStudentFromCourse(int studentId, int courseId) {
-        //YOUR CODE STARTS HERE
-
-
-
-        //YOUR CODE ENDS HERE
+    	 String sql = "DELETE FROM course_student WHERE student_id = ? AND course_id = ?";
+         jdbcTemplate.update(sql, studentId, courseId);
     }
 }
