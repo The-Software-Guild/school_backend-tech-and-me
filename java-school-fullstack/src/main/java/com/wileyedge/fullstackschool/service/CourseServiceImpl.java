@@ -48,19 +48,20 @@ public class CourseServiceImpl implements CourseServiceInterface {
     public Course updateCourseData(int id, Course course) {
         //YOUR CODE STARTS HERE
 
-    	Course existingCourse = courseDao.findCourseById(id);
+    	 Course existingCourse = this.getCourseById(id);
 
-        if (existingCourse != null && existingCourse.getCourseId() == course.getCourseId() && existingCourse.getTeacherId() == id) {
-            existingCourse.setCourseName(course.getCourseName());
-            existingCourse.setCourseDesc(course.getCourseDesc());
-            existingCourse.setTeacherId(course.getTeacherId());
-            courseDao.updateCourse(existingCourse);
-        } else {
-            return null;
-        }
-
-        return existingCourse;
-
+    	    if (existingCourse != null && existingCourse.getCourseId() == course.getCourseId() && existingCourse.getCourseId() == id) {
+    	        existingCourse.setCourseName(course.getCourseName());
+    	        existingCourse.setCourseDesc(course.getCourseDesc());
+    	        existingCourse.setTeacherId(course.getTeacherId());
+    	        courseDao.updateCourse(existingCourse);
+    	        return course;
+    
+    	    } else {
+    	        course.setCourseName("IDs do not match, course not updated");
+    	        course.setCourseDesc("IDs do not match, course not updated");
+    	        return course;
+    	    }
         //YOUR CODE ENDS HERE
     }
 

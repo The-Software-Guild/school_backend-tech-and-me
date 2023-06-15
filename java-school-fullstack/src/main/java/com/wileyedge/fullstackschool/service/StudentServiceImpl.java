@@ -51,18 +51,18 @@ public class StudentServiceImpl implements StudentServiceInterface {
     public Student updateStudentData(int id, Student student) {
         //YOUR CODE STARTS HERE
 
-    	Student existingStudent = studentDao.findStudentById(id);
+    	 Student existingStudent = studentDao.findStudentById(id);
 
-        if (existingStudent != null && existingStudent.getStudentId() == student.getStudentId() && existingStudent.getStudentId() == id) {
-            existingStudent.setStudentFirstName(student.getStudentFirstName());
-            existingStudent.setStudentLastName(student.getStudentLastName());
-            studentDao.updateStudent(existingStudent);
-        } else {
-        	
-          return null;
-        }
-
-        return existingStudent;
+    	    if (existingStudent != null && existingStudent.getStudentId() == student.getStudentId() && existingStudent.getStudentId() == id) {
+    	        existingStudent.setStudentFirstName(student.getStudentFirstName());
+    	        existingStudent.setStudentLastName(student.getStudentLastName());
+    	        studentDao.updateStudent(existingStudent);
+    	        return existingStudent;
+    	    } else {
+    	        student.setStudentFirstName("IDs do not match, student not updated");
+    	        student.setStudentLastName("IDs do not match, student not updated");
+    	        return student;
+    	    }
 
         //YOUR CODE ENDS HERE
     }

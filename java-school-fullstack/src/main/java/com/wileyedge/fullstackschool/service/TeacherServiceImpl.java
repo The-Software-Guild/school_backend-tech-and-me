@@ -51,11 +51,12 @@ public class TeacherServiceImpl implements TeacherServiceInterface {
         if (existingTeacher != null && existingTeacher.getTeacherId() == teacher.getTeacherId() && existingTeacher.getTeacherId() == id) {
             teacher.setTeacherId(id);
             teacherDao.updateTeacher(teacher);
+            return teacher;
         } else {
-           return null;
+            teacher.setTeacherFName("IDs do not match, teacher not updated");
+            teacher.setTeacherLName("IDs do not match, teacher not updated");
+            return teacher;
         }
-
-        return teacher;
         //YOUR CODE ENDS HERE
     }
 
