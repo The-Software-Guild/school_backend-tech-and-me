@@ -44,8 +44,12 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void updateStudent(Student student) {
-    	String sql = "UPDATE student SET fName = ?, lName = ? WHERE sid = ?";
-        jdbcTemplate.update(sql, student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId());
+    	 Student existingStudent = this.findStudentById(student.getStudentId());
+    	    
+    	    if (existingStudent != null) {
+    	        String sql = "UPDATE student SET fName = ?, lName = ? WHERE sid = ?";
+    	        jdbcTemplate.update(sql, student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId());
+    	    }
     }
 
     @Override

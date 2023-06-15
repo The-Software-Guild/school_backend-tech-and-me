@@ -41,8 +41,12 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public void updateCourse(Course course) {
-    	String sql = "UPDATE course SET courseCode = ?, courseDesc = ?, teacherId = ? WHERE cid = ?";
-        jdbcTemplate.update(sql, course.getCourseName(), course.getCourseDesc(), course.getTeacherId(), course.getCourseId());
+    	Course existingCourse = this.findCourseById(course.getCourseId());
+
+        if (existingCourse != null) {
+            String updateSql = "UPDATE course SET courseCode = ?, courseDesc = ?, teacherId = ? WHERE cid = ?";
+            jdbcTemplate.update(updateSql, course.getCourseName(), course.getCourseDesc(), course.getTeacherId(), course.getCourseId());
+        }
     }
 
     @Override
