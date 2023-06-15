@@ -46,12 +46,16 @@ public class TeacherServiceImpl implements TeacherServiceInterface {
     public Teacher updateTeacherData(int id, Teacher teacher) {
         //YOUR CODE STARTS HERE
 
-    	 Teacher existingTeacher = teacherDao.findTeacherById(id);
-    	    if (existingTeacher != null) {
-    	        teacher.setTeacherId(id);
-    	        teacherDao.updateTeacher(teacher);
-    	    }
-    	    return teacher;
+    	Teacher existingTeacher = teacherDao.findTeacherById(id);
+
+        if (existingTeacher != null && existingTeacher.getTeacherId() == teacher.getTeacherId() && existingTeacher.getTeacherId() == id) {
+            teacher.setTeacherId(id);
+            teacherDao.updateTeacher(teacher);
+        } else {
+           return null;
+        }
+
+        return teacher;
         //YOUR CODE ENDS HERE
     }
 
